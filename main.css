@@ -10221,3 +10221,24 @@ LoginTextInput:valid::-webkit-input-placeholder {
     color: #FFFFFF;
     background-color: #9C1010;
 }
+
+.customFontHeading1 {
+    font-family: Times;
+    font-size: 14pt;
+    font-weight: bold;
+    color: red;
+}
+
+.customFontPropertyKey, .customFontPropertyValue {
+    font-family: Times;
+    font-size: 10pt;
+}
+
+.customFontPropertyKey {
+    font-style: italic;
+    
+}
+
+.customFontPropertyValue {
+    font-weight: bold;
+}
