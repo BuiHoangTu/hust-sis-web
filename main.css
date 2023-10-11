@@ -1443,7 +1443,7 @@ img {
     padding: 4px;
     line-height: 1.42857143;
     background-color: #fff;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 4px;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
@@ -10241,4 +10241,23 @@ LoginTextInput:valid::-webkit-input-placeholder {
 
 .customFontPropertyValue {
     font-weight: bold;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-container .image-b4-shadow {
+    display: block;
+    max-width: 100%;
+}
+
+.image-shadow {
+    position: absolute;
+    bottom: -10px; /* Adjust this value to control shadow distance down */
+    right: 10px; /* Adjust this value to control shadow distance right */
+    width: 100%; /* Adjust this value to control shadow width */
+    height: 100%; /* Adjust this value to control shadow height */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7); /* Adjust these values for shadow effect */
 }
