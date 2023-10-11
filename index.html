@@ -8,12 +8,41 @@
     </title>
     <link rel="stylesheet" href="main.css">
 
-    <script src="student-info.js"></script>
-
     <style></style>
 </head>
+<script>
+    function loadStudentInfo() {
+        let keys = ['ho-va-ten', 'nam-vao-truong', 'bac-dao-tao', 'chuong-trinh', 'khoa-quan-ly', 'tinh-trang-hoc-tap', 'gioi-tinh', 'lop', 'khoa-hoc', 'email'];
 
-<body id="ctl00_ctl00_Body" onload="loadStudentInfo('textContent')">
+        let studentInfo = JSON.parse(localStorage.getItem("studentInfo"));
+
+        if (studentInfo) {
+            // Chuyển đổi thành đối tượng JavaScript
+            for (var index in keys) {
+                let key = keys[index]
+                if (studentInfo[key]) {
+                    console.log("set into html " + key + ":" + studentInfo[key]);
+                    document.getElementById(key).textContent = studentInfo[key];
+                }
+            }
+        }
+
+        studentInfo = {}
+        for (var index in keys) {
+            let key = keys[index]
+            studentInfo[key] = document.getElementById(key).textContent;
+            console.log("set into local storage " + key + ":" + studentInfo[key]);
+        }
+
+        localStorage.setItem('studentInfo', JSON.stringify(studentInfo));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => loadStudentInfo());
+
+</script>
+
+
+<body id="ctl00_ctl00_Body">
 
     <form method="post" id="aspnetForm" data-toggle="validator" role="form" novalidate="true">
         <!-- trang chu here -->
@@ -38,20 +67,6 @@
             <tbody>
                 <tr>
                     <td style="vertical-align:Top;">
-
-
-                        <script type="text/javascript">
-                            $(document).ready(function () {
-
-                                window.setTimeout(function () {
-                                    $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
-                                        $(this).remove();
-                                    });
-                                }, 8000);
-
-                            });
-                        </script>
-
                         <div
                             style="padding: 5px; background-color: rgba(255, 0, 0, 0.4); position: fixed; width: 100%; z-index: 9999; top: 0px; left: 0px;">
 
@@ -282,18 +297,15 @@
                                                         <br>
 
                                                         <span class="customFontPropertyKey">Bậc đào tạo : </span>
-                                                        <span class="customFontPropertyValue" id="bac-dao-tao"> KSCLC-TN-TT-VN-ICT
-                                                        </span>
+                                                        <span class="customFontPropertyValue" id="bac-dao-tao"> KSCLC-TN-TT-VN-ICT </span>
                                                         <br>
 
                                                         <span class="customFontPropertyKey">Chương trình : </span>
-                                                        <span class="customFontPropertyValue" id="chuong-trinh"> Công nghệ thông tin
-                                                            Việt-Pháp 2020 </span>
+                                                        <span class="customFontPropertyValue" id="chuong-trinh"> Công nghệ thông tin Việt-Pháp 2020 </span>
                                                         <br>
 
                                                         <span class="customFontPropertyKey">Khoa/Viện quản lý : </span>
-                                                        <span class="customFontPropertyValue" id="khoa-quan-ly"> Trường Công nghệ Thông
-                                                            tin và Truyền thông </span>
+                                                        <span class="customFontPropertyValue" id="khoa-quan-ly"> Trường Công nghệ Thông tin và Truyền thông </span>
                                                         <br>
 
                                                         <span class="customFontPropertyKey">Tình trạng học tập : </span>
@@ -317,8 +329,7 @@
                                                         <br>
 
                                                         <span class="customFontPropertyKey">Email : </span>
-                                                        <span class="customFontPropertyValue" id="email">
-                                                            tu.bh200547@sis.hust.edu.vn </span>
+                                                        <span class="customFontPropertyValue" id="email"> tu.bh200547@sis.hust.edu.vn </span>
                                                         <br>
                                                     </span>
                                                 </div>
