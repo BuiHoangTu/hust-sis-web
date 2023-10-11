@@ -1,0 +1,42 @@
+{
+    "thong-tin-sinh-vien": {
+        "ho-va-ten": "Bùi Hoàng Tú",
+        "nam-vao-truong": 2020,
+        "bac-dao-tao": "KSCLC-TN-TT-VN-ICT",
+        "chuong-trinh": "Công nghệ thông tin Việt-Pháp 2020",
+        "khoa-quan-ly": "Trường Công nghệ Thông tin và Truyền thông",
+        "tinh-trang-hoc tap": "Học",
+        "gioi-tinh": "Nam",
+        "lop": "Việt Pháp 01-K65",
+        "khoa-hoc": 65,
+        "email": "tu.bh200547@sis.hust.edu.vn"
+    },
+    "thong-tin-hoc-tap": {
+        "tong-ket-hoc-ky": 20222,
+        "trung-binh-tich-luy": 3.44,
+        "so-tc-no-dang-ky": 3,
+        "so-tc-tich-luy": 108,
+        "muc-canh-bao": "M0"
+    },
+    "thong-tin-ca-nhan": {
+        "dan-toc": "KINH",
+        "nam-tn-cap-3": "Không có dữ liệu",
+        "dia-chi": "PHƯỜNG BÌNH HÀN, THÀNH PHỐ HẢI DƯƠNG, TỈNH HẢI DƯƠNG",
+        "so-cmtnd": "030***55",
+        "noi-cap": "TỈNH HẢI DƯƠNG",
+        "ho-ten-bo": "BÙI ANH TUẤN",
+        "nam-sinh-bo": "15-10-1975",
+        "nghe-nghiep-bo": "NHÂN VIÊN",
+        "dien-thoai-bo": "091***06",
+        "email-bo": "TU*@*PT.VN",
+        "ton-giao": "KHÔNG",
+        "truong-thpt": "THPT CHUYÊN NGUYỄN TRÃI, THÀNH PHỐ HẢI DƯƠNG, TỈNH HẢI DƯƠNG",
+        "ho-khau": "PHƯỜNG BÌNH HÀN, THÀNH PHỐ HẢI DƯƠNG, TỈNH HẢI DƯƠNG",
+        "so-dien-thoai": "091***05",
+        "ho-ten-me": "VŨ THỊ HẰNG",
+        "nam-sinh-me": "02-09-1978",
+        "nghe-nghiep-me": "NHÂN VIÊN",
+        "dien-thoai-me": "088***59",
+        "email-me": "VU*@*IL.COM"
+    } 
+}
