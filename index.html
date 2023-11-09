@@ -14,7 +14,7 @@
 
 <body id="ctl00_ctl00_Body">
 
-    <form method="post" id="aspnetForm" data-toggle="validator" role="form" novalidate="true">
+    <form method="post" id="aspnetForm" data-toggle="validator" role="form" novalidate="novalidate">
         <!-- trang chu here -->
         <div class="dxpnlControl_Mulberry breadCrumbPanel" id="ctl00_ctl00_breadCrumbPane">
 
@@ -201,13 +201,22 @@
                                             <div class="row">
                                                 <span class=" Title column"
                                                     id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbt1">
-                                                    <span class="customFontHeading1">THÔNG TIN SINH VIÊN</span>
-                                                    <span class="button-container">
-                                                        <button class="btn-fix-info" type="button"
-                                                            onclick="window.location.href = 'change-info.html';">
-                                                            <img src="Content/Images/edit-solid.svg" alt="">
-                                                        </button>
-                                                    </span>
+                                                    <div class="left-div">
+                                                        <span class="customFontHeading1">THÔNG TIN SINH VIÊN</span>
+                                                        <span class="button-container">
+                                                            <button class="btn-fix-info" type="button"
+                                                                    onclick="window.location.href = 'change-info.html';">
+                                                                <img src="Content/Images/edit-solid.svg" alt="edit">
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                    <div id="post-editing-action" class="right-div" hidden="hidden">
+                                                        <a class="btn-text" href="google.com"> < OK > </a>
+                                                        <a class="btn-text" href="google.com"> < Cancel > </a>
+                                                        <a class="btn-text" href="google.com"> < Reset > </a>
+
+                                                    </div>
+
                                                 </span>
                                                 <hr>
                                             </div>
