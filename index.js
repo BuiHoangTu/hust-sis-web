@@ -12,6 +12,13 @@ const editableFields = {
 };
 const postEditActions = document.getElementById("post-editing-action")
 
+const originalInfo = {}
+for (const field_key in editableFields) {
+    if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
+        originalInfo[field_key] = editableFields[field_key].innerText
+    }
+}
+
 let currentInfo = {};
 
 function storePrevEditing() {
@@ -31,6 +38,20 @@ function restoreEditing() {
         if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
             console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${currentInfo[field_key]} ` )
             editableFields[field_key].innerText = currentInfo[field_key]
+            editableFields[field_key].contentEditable = "false"
+        }
+    }
+
+    postEditActions.hidden = true;
+}
+
+function reset() {
+    editable = false;
+
+    for (const field_key in editableFields) {
+        if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
+            console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${originalInfo[field_key]} ` )
+            editableFields[field_key].innerText = originalInfo[field_key]
             editableFields[field_key].contentEditable = "false"
         }
     }
