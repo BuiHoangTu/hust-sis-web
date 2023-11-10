@@ -10,6 +10,7 @@ const editableFields = {
     khoaHoc: document.getElementById("khoa-hoc"),
     email: document.getElementById("email"),
 };
+const postEditActions = document.getElementById("post-editing-action")
 
 let currentInfo = {};
 
@@ -31,4 +32,6 @@ function setEditFields() {
             console.log(field_key + "is can edit: " + editable)
         }
     }
+
+    postEditActions.hidden = !editable
 }
