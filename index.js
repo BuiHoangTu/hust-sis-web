@@ -25,11 +25,17 @@ function storePrevEditing() {
 }
 
 function restoreEditing() {
+    editable = false;
+
     for (const field_key in editableFields) {
         if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
-             editableFields[field_key].innerText = currentInfo[field_key]
+            console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${currentInfo[field_key]} ` )
+            editableFields[field_key].innerText = currentInfo[field_key]
+            editableFields[field_key].contentEditable = "false"
         }
     }
+
+    postEditActions.hidden = true;
 }
 
 let editable = false;
