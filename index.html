@@ -211,9 +211,9 @@
                                                         </span>
                                                     </div>
                                                     <div id="post-editing-action" class="right-div" hidden="hidden">
-                                                        <a class="btn-text" href="google.com"> < OK > </a>
-                                                        <a class="btn-text" href="google.com"> < Cancel > </a>
-                                                        <a class="btn-text" href="google.com"> < Reset > </a>
+                                                        <a class="btn-text" onclick="save()"> < OK > </a>
+                                                        <a class="btn-text" onclick="restoreEditing()"> < Cancel > </a>
+                                                        <a class="btn-text" onclick="reset()"> < Reset > </a>
 
                                                     </div>
 
@@ -227,7 +227,9 @@
 
                                                         <img class="img-thumbnail image-with-shadow"
                                                             id="ctl00_ctl00_contentPane_MainPanel_MainContent_UserImageCPanel_imgUserImage"
-                                                            src="avata.png" alt="Your img" style="width:200px;">
+                                                            src="avatar.png" alt="Your img" style="width:200px;"
+                                                            onclick="imageClicked()">
+                                                        <input type="file" id="imgSelect" name="filename" style="display: none;">
                                                     </div>
                                                     <table
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_UserImageCPanel_LP"
