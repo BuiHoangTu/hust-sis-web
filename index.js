@@ -1,3 +1,5 @@
+const GENDERS = ["Nam", "Nữ", "Khác"];
+
 const editableFields = {
     hoVaTen: document.getElementById("ho-va-ten"),
     namVaoTruong: document.getElementById("nam-vao-truong"),
@@ -27,8 +29,6 @@ function storePrevEditing() {
             currentInfo[field_key] = editableFields[field_key].innerText
         }
     }
-    console.log("Saving data")
-    console.log(currentInfo)
 }
 
 function restoreEditing() {
@@ -36,13 +36,14 @@ function restoreEditing() {
 
     for (const field_key in editableFields) {
         if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
-            console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${currentInfo[field_key]} ` )
+            // console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${currentInfo[field_key]} `)
             editableFields[field_key].innerText = currentInfo[field_key]
             editableFields[field_key].contentEditable = "false"
         }
     }
-
     postEditActions.hidden = true;
+
+    console.log(currentInfo)
 }
 
 function reset() {
@@ -50,13 +51,14 @@ function reset() {
 
     for (const field_key in editableFields) {
         if (Object.prototype.hasOwnProperty.call(editableFields, field_key)) {
-            console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${originalInfo[field_key]} ` )
+            // console.log(`Restoring ${field_key} from ${editableFields[field_key].innerText} back to ${originalInfo[field_key]} `)
             editableFields[field_key].innerText = originalInfo[field_key]
             editableFields[field_key].contentEditable = "false"
         }
     }
-
     postEditActions.hidden = true;
+
+    console.log(originalInfo)
 }
 
 let editable = false;
@@ -65,64 +67,107 @@ function setEditFields() {
     if (editable) return;
 
     editable = !editable;
+    storePrevEditing();
 
     // setting non text field
-    do {
-        storePrevEditing();
-        // namVaoTruong
-        editableFields.namVaoTruong.innerText = null;
-        const year = document.createElement("input");
-        year.type = "number";
-        year.name = "namVaoTruong"
-        year.value = currentInfo.namVaoTruong;
-        year.id = "numberbox-namVaoTruong"
-        editableFields.namVaoTruong.appendChild(year)
+    // namVaoTruong
+    editableFields.namVaoTruong.innerText = null;
+    const year = document.createElement("input");
+    year.type = "number";
+    year.name = "namVaoTruong"
+    year.value = currentInfo.namVaoTruong;
+    year.id = "numberbox-namVaoTruong"
+    editableFields.namVaoTruong.appendChild(year)
 
-        // tinhTrangHocTap
-        editableFields.tinhTrangHocTap.innerText = null;
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.name = "tinhTrangHocTap"
-        checkbox.checked = currentInfo.tinhTrangHocTap === "Học"
-        checkbox.id = "checkbox-hoc"
+    // tinhTrangHocTap
+    editableFields.tinhTrangHocTap.innerText = null;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "tinhTrangHocTap"
+    checkbox.checked = currentInfo.tinhTrangHocTap === "Học"
+    checkbox.id = "checkbox-hoc"
+    const label = document.createElement("label");
+    label.innerHTML = "Học";
+    label.id = "label-hoc"
+    editableFields.tinhTrangHocTap.appendChild(checkbox)
+    editableFields.tinhTrangHocTap.appendChild(label)
+
+    // gioiTinh
+    editableFields.gioiTinh.innerText = null;
+    GENDERS.forEach((gender) => {
+        const radio_btn = document.createElement("input")
+        radio_btn.type = "radio";
+        radio_btn.name = "gioiTinh";
+        radio_btn.value = gender;
+        radio_btn.id = "radio-btn-" + gender;
+
         const label = document.createElement("label");
-        label.innerHTML = "Học";
-        editableFields.tinhTrangHocTap.appendChild(checkbox)
-        editableFields.tinhTrangHocTap.appendChild(label)
+        label.innerHTML = gender;
+        label.id = "label-" + gender;
 
-        // gioiTinh
-        editableFields.gioiTinh.innerText = null;
-        const genders = ["Nam", "Nữ", "Khác"];
-        genders.forEach((gender) => {
-            const radio_btn = document.createElement("input")
-            radio_btn.type = "radio";
-            radio_btn.name = "gioiTinh";
-            radio_btn.value = gender;
-            radio_btn.id = "radio-btn-" + gender;
+        editableFields.gioiTinh.appendChild(radio_btn);
+        editableFields.gioiTinh.appendChild(label);
+    })
 
-            const label = document.createElement("label");
-            label.innerHTML = gender;
+    // khoaHoc
+    editableFields.khoaHoc.innerText = null;
+    const khoa = document.createElement("input");
+    khoa.type = "number";
+    khoa.name = "khoaHoc"
+    khoa.value = currentInfo.khoaHoc;
+    khoa.id = "numberbox-khoaHoc"
+    editableFields.khoaHoc.appendChild(khoa)
 
-            editableFields.gioiTinh.appendChild(radio_btn);
-            editableFields.gioiTinh.appendChild(label);
-        })
+    //////////////// others
+    setHiddenAndEditable(editable)
+}
 
-        // khoaHoc
-        editableFields.khoaHoc.innerText = null;
-        const khoa = document.createElement("input");
-        khoa.type = "number";
-        khoa.name = "khoaHoc"
-        khoa.value = currentInfo.khoaHoc;
-        khoa.id = "numberbox-khoaHoc"
-        editableFields.khoaHoc.appendChild(khoa)
-    } while (false);
 
-    editableFields.hoVaTen.contentEditable = editable;
-    editableFields.bacDaoTao.contentEditable = editable;
-    editableFields.chuongTrinh.contentEditable = editable;
-    editableFields.khoaQuanLy.contentEditable = editable;
-    editableFields.lop.contentEditable = editable;
-    editableFields.email.contentEditable = editable;
+function save() {
+    editable = false;
 
-    postEditActions.hidden = !editable
+    ///////////////////////// parse non-text value
+    // namVaoTruong
+    const year = document.getElementById("numberbox-namVaoTruong");
+    editableFields.namVaoTruong.innerText = year.value;
+    year.remove();
+
+    // tinhTrangHocTap
+    const checkbox = document.getElementById("checkbox-hoc");
+    document.getElementById("label-hoc").remove();
+    editableFields.tinhTrangHocTap.innerText = checkbox.checked ? "Học" : "Nghỉ"
+    checkbox.remove();
+
+    // gioiTinh
+    let selectedGender = document.querySelector('input[name="gioiTinh"]:checked');
+    if (selectedGender) editableFields.gioiTinh.innerText = selectedGender.value;
+    else editableFields.gioiTinh.innerText = currentInfo.gioiTinh;
+    // removing box
+    GENDERS.forEach((gender) => {
+        document.getElementById("radio-btn-" + gender)?.remove()
+        document.getElementById("label-" + gender)?.remove();
+    })
+
+    // khoaHoc
+    const khoa = document.getElementById("numberbox-khoaHoc");
+    editableFields.khoaHoc.innerText = khoa.value;
+    khoa.remove();
+
+    /////////////////// others
+    setHiddenAndEditable(editable)
+
+    console.log("New info: ")
+    storePrevEditing()
+    console.log(currentInfo)
+}
+
+function setHiddenAndEditable(isEditable) {
+    editableFields.hoVaTen.contentEditable = isEditable;
+    editableFields.bacDaoTao.contentEditable = isEditable;
+    editableFields.chuongTrinh.contentEditable = isEditable;
+    editableFields.khoaQuanLy.contentEditable = isEditable;
+    editableFields.lop.contentEditable = isEditable;
+    editableFields.email.contentEditable = isEditable;
+
+    postEditActions.hidden = !isEditable;
 }
