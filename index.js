@@ -161,6 +161,28 @@ function save() {
     console.log(currentInfo)
 }
 
+function imageClicked() {
+    const imgSelector = document.getElementById("imgSelect")
+    imgSelector.click();
+
+    imgSelector.addEventListener("change", (evt => {
+        const selectedFile = evt.target.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                // Update the src attribute of the <img> tag with the data URL
+                document.getElementById('ctl00_ctl00_contentPane_MainPanel_MainContent_UserImageCPanel_imgUserImage').src = e.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    }))
+
+
+}
+
 function setHiddenAndEditable(isEditable) {
     editableFields.hoVaTen.contentEditable = isEditable;
     editableFields.bacDaoTao.contentEditable = isEditable;
@@ -171,3 +193,4 @@ function setHiddenAndEditable(isEditable) {
 
     postEditActions.hidden = !isEditable;
 }
+
