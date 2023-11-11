@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" class="dxChrome dxWindowsPlatform dxWebKitFamily dxBrowserVersion-117">
+<html xmlns="http://www.w3.org/1999/xhtml" class="dxChrome dxWindowsPlatform dxWebKitFamily dxBrowserVersion-117" lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -10,41 +10,11 @@
 
     <style></style>
 </head>
-<script>
-    function loadStudentInfo() {
-        let keys = ['ho-va-ten', 'nam-vao-truong', 'bac-dao-tao', 'chuong-trinh', 'khoa-quan-ly', 'tinh-trang-hoc-tap', 'gioi-tinh', 'lop', 'khoa-hoc', 'email'];
-
-        let studentInfo = JSON.parse(localStorage.getItem("studentInfo"));
-
-        if (studentInfo) {
-            // Chuyển đổi thành đối tượng JavaScript
-            for (var index in keys) {
-                let key = keys[index]
-                if (studentInfo[key]) {
-                    console.log("set into html " + key + ":" + studentInfo[key]);
-                    document.getElementById(key).textContent = studentInfo[key];
-                }
-            }
-        }
-
-        studentInfo = {}
-        for (var index in keys) {
-            let key = keys[index]
-            studentInfo[key] = document.getElementById(key).textContent;
-            console.log("set into local storage " + key + ":" + studentInfo[key]);
-        }
-
-        localStorage.setItem('studentInfo', JSON.stringify(studentInfo));
-    }
-
-    document.addEventListener("DOMContentLoaded", () => loadStudentInfo());
-
-</script>
 
 
 <body id="ctl00_ctl00_Body">
 
-    <form method="post" id="aspnetForm" data-toggle="validator" role="form" novalidate="true">
+    <form method="post" id="aspnetForm" data-toggle="validator" role="form" novalidate="novalidate">
         <!-- trang chu here -->
         <div class="dxpnlControl_Mulberry breadCrumbPanel" id="ctl00_ctl00_breadCrumbPane">
 
@@ -231,13 +201,22 @@
                                             <div class="row">
                                                 <span class=" Title column"
                                                     id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbt1">
-                                                    <span class="customFontHeading1">THÔNG TIN SINH VIÊN</span>
-                                                    <span class="button-container">
-                                                        <button class="btn-fix-info" type="button"
-                                                            onclick="window.location.href = 'change-info.html';">
-                                                            <img src="Content/Images/edit-solid.svg" alt="">
-                                                        </button>
-                                                    </span>
+                                                    <div class="left-div">
+                                                        <span class="customFontHeading1">THÔNG TIN SINH VIÊN</span>
+                                                        <span class="button-container">
+                                                            <button class="btn-fix-info" type="button"
+                                                                    onclick="setEditFields()">
+                                                                <img src="Content/Images/edit-solid.svg" alt="edit">
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                    <div id="post-editing-action" class="right-div" hidden="hidden">
+                                                        <a class="btn-text" onclick="save()"> < OK > </a>
+                                                        <a class="btn-text" onclick="restoreEditing()"> < Cancel > </a>
+                                                        <a class="btn-text" onclick="reset()"> < Reset > </a>
+
+                                                    </div>
+
                                                 </span>
                                                 <hr>
                                             </div>
@@ -248,7 +227,9 @@
 
                                                         <img class="img-thumbnail image-with-shadow"
                                                             id="ctl00_ctl00_contentPane_MainPanel_MainContent_UserImageCPanel_imgUserImage"
-                                                            src="avata.png" alt="Your img" style="width:200px;">
+                                                            src="avatar.png" alt="Your img" style="width:200px;"
+                                                            onclick="imageClicked()">
+                                                        <input type="file" id="imgSelect" name="filename" style="display: none;">
                                                     </div>
                                                     <table
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_UserImageCPanel_LP"
@@ -288,27 +269,27 @@
                                                 <div class="col-md-4">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo1">
-                                                        <span class="customFontPropertyKey">Họ và tên : </span>
+                                                        <span class="customFontPropertyKey">Họ và tên : </span>
                                                         <span class="customFontPropertyValue" id="ho-va-ten"> Bùi Hoàng Tú </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Năm vào trường : </span>
+                                                        <span class="customFontPropertyKey">Năm vào trường : </span>
                                                         <span class="customFontPropertyValue" id="nam-vao-truong"> 2020 </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Bậc đào tạo : </span>
+                                                        <span class="customFontPropertyKey">Bậc đào tạo : </span>
                                                         <span class="customFontPropertyValue" id="bac-dao-tao"> KSCLC-TN-TT-VN-ICT </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Chương trình : </span>
+                                                        <span class="customFontPropertyKey">Chương trình : </span>
                                                         <span class="customFontPropertyValue" id="chuong-trinh"> Công nghệ thông tin Việt-Pháp 2020 </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Khoa/Viện quản lý : </span>
+                                                        <span class="customFontPropertyKey">Khoa/Viện quản lý : </span>
                                                         <span class="customFontPropertyValue" id="khoa-quan-ly"> Trường Công nghệ Thông tin và Truyền thông </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Tình trạng học tập : </span>
+                                                        <span class="customFontPropertyKey">Tình trạng học tập : </span>
                                                         <span class="customFontPropertyValue" id="tinh-trang-hoc-tap"> Học </span>
                                                         <br>
                                                     </span>
@@ -316,24 +297,25 @@
                                                 <div class="col-md-4">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo2">
-                                                        <span class="customFontPropertyKey">Giới tính : </span>
+                                                        <span class="customFontPropertyKey">Giới tính : </span>
                                                         <span class="customFontPropertyValue" id="gioi-tinh"> Nam </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Lớp : </span>
+                                                        <span class="customFontPropertyKey">Lớp : </span>
                                                         <span class="customFontPropertyValue" id="lop"> Việt Pháp 01-K65 </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Khóa học : </span>
+                                                        <span class="customFontPropertyKey">Khóa học : </span>
                                                         <span class="customFontPropertyValue" id="khoa-hoc"> 65 </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Email : </span>
+                                                        <span class="customFontPropertyKey">Email : </span>
                                                         <span class="customFontPropertyValue" id="email"> tu.bh200547@sis.hust.edu.vn </span>
                                                         <br>
                                                     </span>
                                                 </div>
                                             </div>
+                                            <script src="index.js"></script>
 
                                             <div class="row">
                                                 <span class="dxeBase_Mulberry Title"
@@ -347,16 +329,16 @@
                                                 <div class="col-md-6">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo3">
-                                                        <span class="customFontPropertyKey">Tổng kết học kỳ : </span>
+                                                        <span class="customFontPropertyKey">Tổng kết học kỳ : </span>
                                                         <span class="customFontPropertyValue"> 20222 </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Trung bình tích lũy :
+                                                        <span class="customFontPropertyKey">Trung bình tích lũy :
                                                         </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Số TC nợ đăng ký : </span>
+                                                        <span class="customFontPropertyKey">Số TC nợ đăng ký : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
                                                     </span>
@@ -364,15 +346,15 @@
                                                 <div class="col-md-6">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo4">
-                                                        <span class="customFontPropertyKey">Số TC tích lũy : </span>
+                                                        <span class="customFontPropertyKey">Số TC tích lũy : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Trình độ sinh viên : </span>
+                                                        <span class="customFontPropertyKey">Trình độ sinh viên : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Mức cảnh báo : </span>
+                                                        <span class="customFontPropertyKey">Mức cảnh báo : </span>
                                                         <span class="customFontPropertyValue"> M# </span>
                                                         <br>
                                                     </span>
@@ -391,43 +373,43 @@
                                                 <div class="col-md-6">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo5">
-                                                        <span class="customFontPropertyKey">Dân tộc : </span>
+                                                        <span class="customFontPropertyKey">Dân tộc : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Năm TN cấp 3 : </span>
+                                                        <span class="customFontPropertyKey">Năm TN cấp 3 : </span>
                                                         <span class="customFontPropertyValue"> Không có dữ liệu </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Địa chỉ : </span>
+                                                        <span class="customFontPropertyKey">Địa chỉ : </span>
                                                         <span class="customFontPropertyValue"> ## TỈNH HẢI DƯƠNG </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Số CMTND : </span>
+                                                        <span class="customFontPropertyKey">Số CMTND : </span>
                                                         <span class="customFontPropertyValue"> ##***## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Nơi cấp : </span>
+                                                        <span class="customFontPropertyKey">Nơi cấp : </span>
                                                         <span class="customFontPropertyValue"> TỈNH HẢI DƯƠNG </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Họ tên bố : </span>
+                                                        <span class="customFontPropertyKey">Họ tên bố : </span>
                                                         <span class="customFontPropertyValue"> BÙI ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Năm sinh : </span>
+                                                        <span class="customFontPropertyKey">Năm sinh : </span>
                                                         <span class="customFontPropertyValue"> ##-##-19## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Nghề nghiệp : </span>
+                                                        <span class="customFontPropertyKey">Nghề nghiệp : </span>
                                                         <span class="customFontPropertyValue"> NHÂN VIÊN </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Điện thoại : </span>
+                                                        <span class="customFontPropertyKey">Điện thoại : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Email : </span>
+                                                        <span class="customFontPropertyKey">Email : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
                                                     </span>
@@ -435,39 +417,39 @@
                                                 <div class="col-md-6">
                                                     <span class="dxeBase_Mulberry normalText"
                                                         id="ctl00_ctl00_contentPane_MainPanel_MainContent_lbTextInfo6">
-                                                        <span class="customFontPropertyKey">Tôn giáo : </span>
+                                                        <span class="customFontPropertyKey">Tôn giáo : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Trường THPT : </span>
+                                                        <span class="customFontPropertyKey">Trường THPT : </span>
                                                         <span class="customFontPropertyValue"> ## TỈNH HẢI DƯƠNG </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Hộ khẩu : </span>
+                                                        <span class="customFontPropertyKey">Hộ khẩu : </span>
                                                         <span class="customFontPropertyValue"> ## TỈNH HẢI DƯƠNG </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Số Điện thoại : </span>
+                                                        <span class="customFontPropertyKey">Số Điện thoại : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Họ tên mẹ : </span>
+                                                        <span class="customFontPropertyKey">Họ tên mẹ : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Năm sinh : </span>
+                                                        <span class="customFontPropertyKey">Năm sinh : </span>
                                                         <span class="customFontPropertyValue"> ##-##-## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Nghề nghiệp : </span>
+                                                        <span class="customFontPropertyKey">Nghề nghiệp : </span>
                                                         <span class="customFontPropertyValue"> NHÂN VIÊN </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Điện thoại : </span>
+                                                        <span class="customFontPropertyKey">Điện thoại : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
 
-                                                        <span class="customFontPropertyKey">Email : </span>
+                                                        <span class="customFontPropertyKey">Email : </span>
                                                         <span class="customFontPropertyValue"> ## </span>
                                                         <br>
                                                     </span>

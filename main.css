@@ -10221,7 +10221,7 @@ h3 {
     line-height: 4px;
     border: 3px solid #FF9900;
     display: block;
-    width: 80%;
+    width: 100%;
 }
 
 .center {
@@ -10561,4 +10561,16 @@ LoginTextInput:valid::-webkit-input-placeholder {
 .btn-fix-info {
     width: 2em;
     height: auto;
+}
+
+.left-div {
+    float: left;
+}
+
+.right-div {
+    float: right;
+}
+
+.btn-text {
+    color: black;
 }
