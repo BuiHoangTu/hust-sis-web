@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CTTBK - Main Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="thong_tin_ca_nhan.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+
+<body>
+    <div class="headerPane">
+        <div class="container">
+            <a href="http://ctt-daotao.hust.edu.vn/">
+                <img src="images/logo-cttdt.png" alt="" style="height:100%" />
+            </a>
+        </div>
+    </div>
+
+
+    <!------------------------Nút trang chủ------------------------>
+    <div class="dxpnlControl_Mulberry breadCrumbPanel" id="ctl00_ctl00_breadCrumbPane">
+
+        <div id="breadCrumb">
+            <ul class="breadCrumbList">
+                <li class="start cap1"><a href="./index.html">Trang chủ</a></li>
+                <li class="start cap1"><a href="./thong_tin_ca_nhan.html">Thông tin cá nhân</a></li>
+
+
+
+            </ul>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+    <!-------------------Main-------------->
+    <div class="main d-flex mt-5">
+        
+        <div class="mainContent">
+            <div class="titleContent center">
+                <span class="reqTitle">
+                    THÔNG TIN CÁ NHÂN
+                </span>
+                <hr>
+            </div>
+
+            <div class="content" id="content">
+                <div class="row">
+                    <div class="d-flex">
+                        <div class="reqTitle">
+                            THÔNG TIN SINH VIÊN - 20200547
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="addInfoItem(this)">Add Info
+                            Item</button>
+                        <button type="button" class="btn btn-primary btn-sm ms-2" onclick="addGroupInfoItem(this)">Add
+                            Info
+                            Group</button>
+                    </div>
+
+                    <hr class="custom-hr">
+
+                    <div class="ms-2">
+
+                    </div>
+
+                </div>
+                <button type="button" id="exportButton" class="btn btn-secondary mt-4" style="width: 100px;">Export
+                    PDF</button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <!------FOOTER--------->
+    <footer class="footer">
+        <div class="footerContent">
+            <div class="footerMain">
+                <div class="footerLeft">
+                </div>
+                <div class="footerRight">
+                    <hr>
+                    <b>Trường Đại học Bách Khoa Hà Nội</b>
+                    <br><br>
+                    <b>Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</b>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+
+<script>
+    function addInfoItem(element) {
+        // Tạo phần tử div mới
+        let newItem = document.createElement("div");
+        newItem.className = "row mt-2";
+
+        // Tạo phần tử con bên trong div
+        let itemName = document.createElement("div");
+        itemName.className = "col-3";
+        itemName.setAttribute("spellcheck", "false")
+        itemName.setAttribute("ondblclick", "editEnable(this)")
+        itemName.setAttribute("style", "width: 250px");
+        itemName.style.userSelect = "none";
+        itemName.textContent = "Item Info Name";
+        itemName.setAttribute("onkeydown", "handleKeyDown(event, this)")
+        // Thêm phần tử con vào div
+        newItem.appendChild(itemName);
+
+        // -------------------------------------------------------------
+        var selectContainer = document.createElement('div');
+        selectContainer.className = 'select-container'
+
+
+        var selectElement = document.createElement('select');
+        selectElement.classList.add('form-select');
+        selectElement.id = 'inputType';
+
+        // Tạo tùy chọn Text và Select
+        var textOption = document.createElement('option');
+        textOption.value = 'text';
+        textOption.text = 'Text';
+
+        var selectOption = document.createElement('option');
+        selectOption.value = 'select';
+        selectOption.text = 'Select';
+
+        // Tạo tùy chọn Check list
+        var checkListOption = document.createElement('option');
+        checkListOption.value = 'check-list';
+        checkListOption.text = 'Check list';
+
+        // Thêm tùy chọn vào phần tử select
+        selectElement.add(textOption);
+        selectElement.add(selectOption);
+        selectElement.add(checkListOption)
+
+
+        // Tạo phần tử button OK
+        var okButton = document.createElement('button');
+        okButton.classList.add('btn', 'btn-primary');
+        okButton.innerHTML = 'OK';
+
+
+        selectContainer.appendChild(selectElement)
+        selectContainer.appendChild(okButton)
+
+        newItem.appendChild(selectContainer)
+
+        let containerInputInfo = document.createElement("div")
+        containerInputInfo.className = "col-6";
+
+
+        okButton.addEventListener('click', function () {
+            newItem.removeChild(selectContainer)
+            let inputInfo
+            if (selectElement.value == 'text') {
+                // Thêm thẻ input               
+                inputInfo = document.createElement("input")
+                inputInfo.className = "form-control"
+                inputInfo.setAttribute("type", "text");
+                inputInfo.readOnly = true;
+                inputInfo.setAttribute("ondblclick", "editEnableInput(this)")
+                inputInfo.setAttribute("onkeydown", "handleKeyDown(event, this)")
+
+
+                containerInputInfo.appendChild(inputInfo)
+                newItem.appendChild(containerInputInfo)
+                // ADD ICON
+                let containerIcon = document.createElement("div")
+                containerIcon.className = 'col-3'
+                let iconDelete = document.createElement("i")
+                iconDelete.className = "fa-solid fa-trash"
+                iconDelete.setAttribute('onclick', 'deleteItem(this)')
+                iconDelete.style.cursor = 'pointer'
+                containerIcon.appendChild(iconDelete)
+                newItem.appendChild(containerIcon)
+            }
+            if (selectElement.value == 'select') {
+                let containerSelectItem = document.createElement("div")
+                containerSelectItem.className = "container-select col-6";
+
+                let inputItem = document.createElement('input')
+                inputItem.classList.add('form-control', 'itemSelect')
+                inputItem.placeholder = 'Input option'
+                // ICON
+                let containerIconSelect = document.createElement("div")
+                containerIconSelect.className = "col-3";
+
+                let iconAdd = document.createElement("i")
+                iconAdd.className = "fa-solid fa-plus"
+
+                iconAdd.addEventListener('click', function () {
+                    containerSelectItem.removeChild(okSelect)
+                    let newinputItem = document.createElement('input')
+                    newinputItem.classList.add('form-control', 'itemSelect')
+                    newinputItem.placeholder = 'Input option'
+                    containerSelectItem.appendChild(newinputItem)
+                    containerSelectItem.appendChild(okSelect)
+                })
+
+                let iconDelete = document.createElement("i")
+                iconDelete.className = "fa-solid fa-trash ms-2"
+
+                iconDelete.addEventListener('click', function () {
+                    if (containerSelectItem.childElementCount > 2) {
+                        containerSelectItem.removeChild(containerSelectItem.lastElementChild)
+                        containerSelectItem.removeChild(containerSelectItem.lastElementChild)
+                        containerSelectItem.appendChild(okSelect)
+                    } else {
+                        confirm('Bùi Hoàng Tú 20200547 \n Cần có ít nhất một lựa chọn trong thẻ Select')
+                    }
+
+                })
+
+                containerIconSelect.appendChild(iconAdd)
+                containerIconSelect.appendChild(iconDelete)
+
+
+                //icon Confirm list
+                var okSelect = document.createElement('button');
+                okSelect.classList.add('btn', 'btn-primary');
+                okSelect.innerHTML = 'OK';
+
+                containerSelectItem.appendChild(inputItem)
+                containerSelectItem.appendChild(okSelect)
+                newItem.appendChild(containerSelectItem)
+                newItem.appendChild(containerIconSelect)
+                // lắng nghe
+
+                // Thêm thẻ input
+                inputInfo = document.createElement('select');
+                inputInfo.classList.add('form-select');
+                okSelect.addEventListener('click', function () {
+                    parentElement = this.closest('.container-select')
+
+                    // Lấy tất cả các thẻ <input> trong phần tử cha
+                    var inputElements = parentElement.querySelectorAll('input');
+
+
+
+                    // Lặp qua các thẻ <input> và lưu giá trị vào danh sách
+                    inputElements.forEach(function (inputElement) {
+                        var option = document.createElement('option');
+                        option.value = inputElement.value;
+                        option.text = inputElement.value;
+                        inputInfo.add(option)
+                    });
+
+                    newItem.removeChild(containerSelectItem)
+                    newItem.removeChild(containerIconSelect)
+
+                    containerInputInfo.appendChild(inputInfo)
+                    newItem.appendChild(containerInputInfo)
+                    // ADD ICON
+                    let containerIcon = document.createElement("div")
+                    containerIcon.className = 'col-3'
+                    let iconDelete = document.createElement("i")
+                    iconDelete.className = "fa-solid fa-trash"
+                    iconDelete.setAttribute('onclick', 'deleteItem(this)')
+                    iconDelete.style.cursor = 'pointer'
+                    containerIcon.appendChild(iconDelete)
+                    newItem.appendChild(containerIcon)
+
+                })
+
+
+            }
+
+            if (selectElement.value == 'check-list') {
+
+                let containerSelectItem = document.createElement("div")
+                containerSelectItem.className = "container-select col-6";
+
+                let inputItem = document.createElement('input')
+                inputItem.classList.add('form-control', 'itemSelect')
+                inputItem.placeholder = 'Input option'
+                // ICON
+                let containerIconSelect = document.createElement("div")
+                containerIconSelect.className = "col-3";
+
+                let iconAdd = document.createElement("i")
+                iconAdd.className = "fa-solid fa-plus"
+
+                iconAdd.addEventListener('click', function () {
+                    containerSelectItem.removeChild(okSelect)
+                    let newinputItem = document.createElement('input')
+                    newinputItem.classList.add('form-control', 'itemSelect')
+                    newinputItem.placeholder = 'Input option'
+                    containerSelectItem.appendChild(newinputItem)
+                    containerSelectItem.appendChild(okSelect)
+                })
+
+                let iconDelete = document.createElement("i")
+                iconDelete.className = "fa-solid fa-trash ms-2"
+
+                iconDelete.addEventListener('click', function () {
+                    if (containerSelectItem.childElementCount > 2) {
+                        containerSelectItem.removeChild(containerSelectItem.lastElementChild)
+                        containerSelectItem.removeChild(containerSelectItem.lastElementChild)
+                        containerSelectItem.appendChild(okSelect)
+                    } else {
+                        confirm('Bùi Hoàng Tú 20200547 \n Cần có ít nhất một lựa chọn trong thẻ Select')
+                    }
+
+                })
+
+                containerIconSelect.appendChild(iconAdd)
+                containerIconSelect.appendChild(iconDelete)
+
+
+                //icon Confirm list
+                var okSelect = document.createElement('button');
+                okSelect.classList.add('btn', 'btn-primary');
+                okSelect.innerHTML = 'OK';
+
+                containerSelectItem.appendChild(inputItem)
+                containerSelectItem.appendChild(okSelect)
+                newItem.appendChild(containerSelectItem)
+                newItem.appendChild(containerIconSelect)
+                // lắng nghe
+
+                // Thêm thẻ input
+                inputInfo = document.createElement('div');
+
+                okSelect.addEventListener('click', function () {
+                    parentElement = this.closest('.container-select')
+
+                    // Lấy tất cả các thẻ <input> trong phần tử cha
+                    var inputElements = parentElement.querySelectorAll('input');
+                    var options = [];
+
+
+                    // Lặp qua các thẻ <input> và lưu giá trị vào danh sách
+                    inputElements.forEach(function (inputElement) {
+                        options.push(inputElement.value)
+                    });
+                    
+
+                    // Tạo ô chọn cho mỗi option
+                    options.forEach(function (option, index) {
+                        var checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = 'checkbox' + (index + 1);
+                        checkbox.name = 'checkboxGroup';
+
+                        var label = document.createElement('label');
+                        label.htmlFor = 'checkbox' + (index + 1);
+                        label.appendChild(document.createTextNode(option));
+
+                        inputInfo.appendChild(checkbox);
+                        inputInfo.appendChild(label);
+                        inputInfo.appendChild(document.createElement('br'));
+                    });
+
+                    newItem.removeChild(containerSelectItem)
+                    newItem.removeChild(containerIconSelect)
+
+                    containerInputInfo.appendChild(inputInfo)
+                    newItem.appendChild(containerInputInfo)
+                    // ADD ICON
+                    let containerIcon = document.createElement("div")
+                    containerIcon.className = 'col-3'
+                    let iconDelete = document.createElement("i")
+                    iconDelete.className = "fa-solid fa-trash"
+                    iconDelete.setAttribute('onclick', 'deleteItem(this)')
+                    iconDelete.style.cursor = 'pointer'
+                    containerIcon.appendChild(iconDelete)
+                    newItem.appendChild(containerIcon)
+
+                })
+            }
+
+        });
+        // -------------------------------------------------------------------------------------------
+        // Thêm div mới vào container
+        let rowElement = element.closest('.row');
+        rowElement.children[2].appendChild(newItem)
+    }
+
+    function editEnable(element) {
+        element.setAttribute("contenteditable", "true")
+        element.focus()
+        element.addEventListener('blur', function () {
+            element.removeAttribute("contenteditable")
+
+        });
+    }
+
+    function editEnableItemGroup(element) {
+        element.setAttribute("contenteditable", "true")
+        element.focus()
+        element.addEventListener('blur', function () {
+            if (!element.textContent.includes('20200547')) {
+                element.textContent = element.textContent + '_20200547'
+            }
+            element.removeAttribute("contenteditable")
+
+        });
+    }
+
+    function editEnableInput(element) {
+        element.readOnly = false;
+        element.focus()
+        element.addEventListener('blur', function () {
+            if (!element.textContent.includes('20200547')) {
+                element.textContent = element.textContent + '_20200547'
+            }
+            element.removeAttribute("contenteditable")
+            element.readOnly = true
+        });
+    }
+
+    function handleKeyDown(event, element) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent adding a new line
+            element.blur(); // Remove focus
+            element.removeAttribute("contenteditable")
+        }
+    }
+
+    function addGroupInfoItem(element) {
+        var newDiv = document.createElement('div');
+        newDiv.classList.add('row', 'mt-5')
+
+
+        let title = document.createElement("div")
+        title.className = 'd-flex'
+        // Tạo div con với class "reqTitle d-flex"
+        var reqTitleDiv = document.createElement('div');
+        reqTitleDiv.classList.add('reqTitle', 'px-2');
+        reqTitleDiv.textContent = 'Group Item 20200547';
+        reqTitleDiv.setAttribute("ondblclick", "editEnableItemGroup(this)")
+        reqTitleDiv.setAttribute("spellcheck", "false")
+        reqTitleDiv.setAttribute("onkeydown", "handleKeyDown(event, this)")
+        reqTitleDiv.style.width = '200px'
+        reqTitleDiv.style.userSelect = "none";
+        title.appendChild(reqTitleDiv)
+
+        // Thêm icon trash
+        var trashIcon = document.createElement('i');
+        trashIcon.classList.add('fa-solid', 'fa-trash', 'ms-3', 'text-dark');
+        trashIcon.setAttribute('onclick', 'deleteGroupItem(this)')
+        trashIcon.style.cursor = 'pointer'
+        title.appendChild(trashIcon);
+
+        // Thêm nút "Add Info Item"
+        var addInfoItemButton = document.createElement('button');
+        addInfoItemButton.type = 'button';
+        addInfoItemButton.classList.add('btn', 'btn-primary', 'btn-sm', 'ms-2');
+        addInfoItemButton.textContent = 'Add Info Item';
+        addInfoItemButton.setAttribute('onclick', 'addInfoItem(this)')
+        title.appendChild(addInfoItemButton);
+
+        // Thêm nút "Add Info Group"
+        var addInfoGroupButton = document.createElement('button');
+        addInfoGroupButton.type = 'button';
+        addInfoGroupButton.classList.add('btn', 'btn-primary', 'btn-sm', 'ms-2');
+        addInfoGroupButton.textContent = 'Add Info Group'
+        addInfoGroupButton.setAttribute('onclick', 'addGroupInfoItem(this)')
+        title.appendChild(addInfoGroupButton);
+
+        // Thêm div con vào div chính
+        newDiv.appendChild(title);
+
+        // Thêm đường gạch ngang
+        var hrElement = document.createElement('hr');
+        hrElement.className = 'custom-hr';
+        newDiv.appendChild(hrElement);
+
+        // Thêm div rỗng vào
+        let emptyDiv = document.createElement('div');
+        emptyDiv.classList.add('ms-2');
+        newDiv.appendChild(emptyDiv);
+        let rowElement = element.closest('.row');
+        rowElement.insertAdjacentElement('afterend', newDiv);
+    }
+
+    function deleteGroupItem(element) {
+        let rowElement = element.closest('.row');
+        if (confirm("Bùi Hoàng Tú - 20200547 \n Bạn muốn xóa group item này không ?")) {
+            rowElement.remove()
+        }
+    }
+
+    function deleteItem(element) {
+        let rowDivParent = element.closest('.row');
+        if (confirm("Bùi Hoàng Tú - 20200547 \n Bạn muốn xóa item này không ?")) {
+            rowDivParent.remove()
+        }
+
+    }
+
+</script>
+
+<script>
+    $(document).ready(function ($) {
+        $('#exportButton').on('click', function () {
+            hideAllButtons();
+            exportToPDF();
+        });
+
+        function exportToPDF() {
+            const body = $('.mainContent')[0];
+
+            html2canvas(body).then(function (canvas) {
+                const pdf = new jsPDF('p', 'mm', 'a3');
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
+                pdf.save('webpage.pdf');
+                showAllButtons();
+            });
+        }
+    });
+
+    function hideAllButtons() {
+        var buttons = document.getElementsByClassName("btn");
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = "none";
+        }
+
+        // Lấy tất cả các thẻ <i>
+        var italicElements = document.getElementsByTagName('i');
+
+        // Ẩn tất cả các thẻ <i> sử dụng vòng lặp for
+        for (var i = 0; i < italicElements.length; i++) {
+            italicElements[i].style.display = 'none';
+        }
+    }
+
+    function showAllButtons() {
+        var buttons = document.getElementsByClassName("btn");
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = "block";
+        }
+
+        // Lấy tất cả các thẻ <i>
+        var italicElements = document.getElementsByTagName('i');
+
+        // Ẩn tất cả các thẻ <i> sử dụng vòng lặp for
+        for (var i = 0; i < italicElements.length; i++) {
+            italicElements[i].style.display = 'block';
+        }
+
+
+    }
+
+</script>
+
+</html>
